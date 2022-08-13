@@ -1,7 +1,4 @@
 
-const addStaticFunction: Function = (classObject: any, name: string, func: <T>(...args: any) => T): void => {
-    classObject[name] = func;
-}
 
 const isInteger: Function = (num: number) => {
     const parsedNumber = parseInt(num + "")
@@ -43,7 +40,7 @@ interface ArithmeticProps {
 
 abstract class MatrixProcess {
 
-    private static process(process: "sub" | "sum" | "mul_const", matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps, constNumber?: number): Matrix {
+    private static process(process: "sub" | "sum", matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix {
         let isFixed = false;
 
         isFixed = validateOptions(options);
@@ -222,8 +219,7 @@ class Matrix extends MatrixProcess implements IMatrix {
             start?: number,
             end?: number
         }
-    }): String {
-        let string = "";
+    }): void {
         let matrixArray = this.clone();
         if (options) {
             const { rows, cols } = options;
@@ -240,9 +236,7 @@ class Matrix extends MatrixProcess implements IMatrix {
         } 
 
         for (let i = 0; i < matrixArray.length; i++)
-            string += matrixArray[i].join(" ") + "\n"
-            
-        return string;
+            console.log(matrixArray[i].join(" "))
     }
 
 

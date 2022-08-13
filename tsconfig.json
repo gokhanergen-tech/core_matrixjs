@@ -3,7 +3,7 @@
         "target":"es5",
         "module":"CommonJS",
         "declaration": true,
-        "outDir": "node_modules/core-matrixjs/lib",
+        "outDir": "./lib",
         "strict": true
     },
     "include": ["src"],
