@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "target":"es5",
+        "module":"CommonJS",
+        "declaration": true,
+        "outDir": "node_modules/core-matrixjs/lib",
+        "strict": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules","**/__test__/*"]
+}

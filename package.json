@@ -1,0 +1,23 @@
+{
+  "name": "core-matrixjs",
+  "version": "1.0.0",
+  "description": "My Library",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare":"npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url":"git+https://github.com/gokhanergen-tech/core_matrixjs.git"
+  },
+  "keywords": [],
+  "author": "Gökhan ERGEN",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.7.4"
+  }
+  ,
+  "files": ["lib/**/*"]
+}
