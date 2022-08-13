@@ -147,13 +147,14 @@ export default abstract class MatrixProcess {
             let isFixed = null;
 
 
-            isFixed = validateOptions(options);
+            isFixed = validateOptions(options).fixed;
 
 
             for (let i = 0; i < options.y; i++) {
                 let row: number[] = []
                 for (let j = 0; j < options.x; j++) {
                     let producedNumber: number = min + Math.random() * (max - min);
+                  
                     producedNumber = (isFixed ? parseFloat(producedNumber.toFixed(options.fixed)) : producedNumber)
 
                     row.push(producedNumber)

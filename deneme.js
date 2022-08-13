@@ -1,14 +1,14 @@
-const {Matrix} =require("core-matrixjs")
+const {Matrix} =require("./lib/index")
 
 
 
-let matrix=new Matrix([[1,1,1],[1,2,3]])
-matrix=Matrix.constArithmeticProcess(matrix,3,"mul",2)
-matrix.write({
-    rows:{
-        start:0
-    }
+let matrix=Matrix.generateMatrix({
+    x:2,y:2,scala:{
+        min:0,max:1
+    },fixed:2
 })
+
+console.log(matrix)
 
 
 
