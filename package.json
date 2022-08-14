@@ -1,6 +1,6 @@
 {
-  "name": "core-matrixjs",
-  "version": "1.0.0",
+  "name": "matrixjs-core",
+  "version": "1.0.1",
   "description": "This is a matrix library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -20,6 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "core-matrixjs": "^1.0.4",
+    "matrixjs-core": "^1.0.1",
     "typescript": "^4.7.4"
   },
   "files": [
