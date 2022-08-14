@@ -2,7 +2,7 @@ import Matrix from '../entities/Matrix'
 
 //Validate fixed
 const validateFixed = (fixed: number) => {
-    if (fixed && (fixed < 0 || fixed > 100))
+    if (typeof fixed === 'number' && (fixed < 0 || fixed > 100))
         return false;
     return true;
 
@@ -34,10 +34,10 @@ interface GenerateMatrixProps {
 const validateOptions = (options?: ArithmeticProps): any => {
     if (options) {
         const fixed = options?.fixed;
-        if (fixed && !isInteger(fixed) && validateFixed(fixed))
+        if ((fixed !== 0) && fixed && !isInteger(fixed) && validateFixed(fixed))
             throw new Error("Invalid props values error!")
         return {
-            ...options, fixed: fixed ? fixed : null
+            ...options, fixed
         }
     }
     return null;
@@ -71,7 +71,7 @@ export default abstract class MatrixProcess {
         if (matrix && num) {
             const matrixArray: number[][] = matrix.getMatrix();
             const resultMatrix: number[][] = [];
-            const isFixed = fixed && validateFixed(fixed) ? true : false;
+            const isFixed = (fixed === 0) || (fixed && validateFixed(fixed) ? true : false)
             for (let i = 0; i < matrix.getY(); i++) {
                 const row: number[] = [];
                 for (let j = 0; j < matrix.getX(); j++) {
@@ -101,7 +101,7 @@ export default abstract class MatrixProcess {
             let isFixed = null;
 
             if (options) {
-                isFixed = validateOptions(options);
+                isFixed = validateOptions(options).fixed;
             }
 
             const cloneFirst = matrixFirst.clone();
@@ -114,7 +114,7 @@ export default abstract class MatrixProcess {
                     for (let j = 0; j < matrixFirst.getX(); j++) {
                         sum += cloneFirst[k][j] * cloneSecond[j][i]
                     }
-                    firstRow.push((isFixed ? parseFloat(sum.toFixed(options?.fixed)) : sum))
+                    firstRow.push((isFixed !== null ? parseFloat(sum.toFixed(options?.fixed)) : sum))
                 }
                 matrix.push(firstRow)
             }
@@ -154,8 +154,8 @@ export default abstract class MatrixProcess {
                 let row: number[] = []
                 for (let j = 0; j < options.x; j++) {
                     let producedNumber: number = min + Math.random() * (max - min);
-                  
-                    producedNumber = (isFixed ? parseFloat(producedNumber.toFixed(options.fixed)) : producedNumber)
+
+                    producedNumber = (isFixed !== null ? parseFloat(producedNumber.toFixed(options.fixed)) : producedNumber)
 
                     row.push(producedNumber)
                 }
@@ -164,6 +164,32 @@ export default abstract class MatrixProcess {
             return new Matrix(matrix)
         } else {
             throw new Error("Invalid props values error!")
+        }
+    }
+
+    public static ifso(matrix: Matrix, queryFunc: (value: number) => boolean, doFunc: (value: number) => number, doFalseFunc?: (value: number) => number): Matrix {
+        if (matrix && queryFunc !== null && doFunc !== null) {
+            const matrixArray = matrix.getMatrix();
+            const cloneMatrixArray = matrix.clone();
+            const isDoFalseFuncActive = doFalseFunc && typeof doFalseFunc === 'function'
+            try {
+                for (let i = 0; i < matrix.getY(); i++) {
+                    for (let j = 0; j < matrix.getX(); j++) {
+                        if (queryFunc(matrixArray[i][j])) {
+                            cloneMatrixArray[i][j] = doFunc(matrixArray[i][j])
+                        } else
+                            if (isDoFalseFuncActive) {
+                                cloneMatrixArray[i][j] = doFalseFunc(matrixArray[i][j])
+                            }
+                    }
+                }
+                return new Matrix(cloneMatrixArray)
+            } catch (err) {
+                console.log(err)
+                throw new Error("Error!")
+            }
+        } else {
+            throw new Error("Null argumant error!")
         }
     }
 }
