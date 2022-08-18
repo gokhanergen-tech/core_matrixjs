@@ -48,12 +48,12 @@
     <code>{
         fixed?: number
     }</code>
-    <br>
+ 
     <li>public static sub(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix</li>
-    <u>options</u>
+    <div><u>options</u>
     <code>{
         fixed?: number
-    }</code>
+    }</code></div>
     <li>public static generateMatrix(options: GenerateMatrixProps): Matrix</li>
     <u>options</u>
     <code>{
