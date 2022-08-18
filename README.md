@@ -40,31 +40,16 @@
         fixed?: number): Matrix</li>
     <li>public static multiply(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix </li>
     <u>options</u>
-    {
+    <code>{
         fixed?: number
-    }
+    }</code>
     <li>public static sum(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix</li>
-    <u>options</u>
-    {
-        fixed?: number
-    }
+    
  
     <li>public static sub(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix</li>
-    <u>options</u>
-    {
-        fixed?: number
-    }
+   
     <li>public static generateMatrix(options: GenerateMatrixProps): Matrix</li>
-    <u>options</u>
-    {
-        x: number,
-        y: number,
-        fixed?: number,
-        scala: {
-            max: number,
-            min: number
-        }
-    }
+ 
     <li>public static ifso(matrix: Matrix, queryFunc: (value: number) => boolean, doFunc: (value: number) => number,
         doFalseFunc?: (value: number) => number): Matrix</li>
 
