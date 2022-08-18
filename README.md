@@ -42,13 +42,13 @@
     <u>options</u>
     <code>{
         fixed?: number
-    }</code><br>
+    }</code>
     <li>public static sum(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix</li>
     <u>options</u>
     <code>{
         fixed?: number
     }</code>
-
+    <br>
     <li>public static sub(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix</li>
     <u>options</u>
     <code>{
