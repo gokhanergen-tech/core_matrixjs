@@ -48,7 +48,8 @@
     <code>{
         fixed?: number
     }</code>
-    
+</ul>
+<ul>
     <li>public static sub(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix</li>
     <u>options</u>
     <code>{
@@ -65,8 +66,8 @@
             min: number
         }
     }</code>
-
-
+    <li>public static ifso(matrix: Matrix, queryFunc: (value: number) => boolean, doFunc: (value: number) => number,
+        doFalseFunc?: (value: number) => number): Matrix</li>
 
 </ul>
 <b>
