@@ -12,12 +12,17 @@
     <h1>Matrix Class</h1>
 </b>
 <ul>
-    <li>constructor(matrix: number[][])</li>
+    <li>constructor(matrix: number[][], dataType: dataTypes = "Float64")</li>
     <li>public transpose(): Matrix </li>
     <li>public getX(): number</li>
     <li>public getY(): number</li>
-    <li>public getMatrix(): number[][]</li>
+    <li>public getTypedArray():MatrixType</li>
+    <li>public get type(): string</li>
     <li>public clone(): number[][]</li>
+    <li>public convertDataType(dataType: dataTypes): number[][] | undefined to Matrix class</li>
+    <code>
+        dataType can be "Float64" | "Float32" | "UInt8" | "UInt16" | "UInt32" | "Int8" | "Int16" | "Int32"
+    </code>
     <li>public write(options?)</li>
     <u>options</u>
     <code>{
@@ -48,8 +53,7 @@
     <code>{
         fixed?: number
     }</code>
-</ul>
-<ul>
+
     <li>public static sub(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix</li>
     <u>options</u>
     <code>{
@@ -68,6 +72,7 @@
     }</code>
     <li>public static ifso(matrix: Matrix, queryFunc: (value: number) => boolean, doFunc: (value: number) => number,
         doFalseFunc?: (value: number) => number): Matrix</li>
+
 
 </ul>
 <b>
@@ -90,3 +95,32 @@ let matrix=new Matrix([[1,1,1],[1,2,3]])
 Matrix.constArithmeticProcess(matrix,3,"mul",2)
 </code>
 <hr>
+
+
+<b>
+    <h1>Version 1.0.5</h1>
+</b>
+<ul>
+    <b>Deprecated</b>
+    <li>getMatrix() from Matrix class</li>
+</ul>
+<ul>
+    <b>News</b>
+    <li>added 'type' property to Matrix class</li>
+    <li>Matrix constructor changed to constructor(matrix: number[][], dataType: dataTypes = "Float64") from
+        constructor(matrix: number[][])</li>
+    <li>added public convertDataType(dataType: dataTypes): number[][] | undefined to Matrix class</li>
+    <li>added generateMatrix method with dataType</li>
+    <li><code>
+        added Data types like "Float64" | "Float32" | "UInt8" | "UInt16" | "UInt32" | "Int8" | "Int16" | "Int32"
+    </code></li>
+    <li>added public getTypedArray():MatrixType method to Matrix class</li>
+    <code>MatrixType 
+        Uint16Array |
+Uint8Array |
+Uint32Array |
+Int32Array |
+Int8Array |
+Int16Array | Float32Array | Float64Array | null
+    </code>
+</ul>

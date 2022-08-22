@@ -1,4 +1,5 @@
 import Matrix from '../entities/Matrix'
+import { dataTypes, MatrixType } from '../types';
 
 //Validate fixed
 const validateFixed = (fixed: number) => {
@@ -6,6 +7,18 @@ const validateFixed = (fixed: number) => {
         return false;
     return true;
 
+}
+
+//Validate type
+const matricesTypeValidate = (matrixFirst: Matrix, matrixSecond: Matrix) => {
+    if (matrixFirst.type !== matrixSecond.type)
+        throw new Error("Matrices' types must be the same of each other!")
+}
+
+//Validate size
+const matricesSizeValidate = (matrixFirst: Matrix, matrixSecond: Matrix) => {
+    if (matrixFirst.getX() === matrixSecond.getX() && matrixFirst.getY() === matrixSecond.getY())
+        throw new Error("Matrices' column and row numbers must be the same of each other!")
 }
 
 //Is Integer, some numbers may be floating number
@@ -24,6 +37,7 @@ interface GenerateMatrixProps {
     x: number,
     y: number,
     fixed?: number,
+    dataType?: dataTypes,
     scala: {
         max: number,
         min: number
@@ -46,13 +60,17 @@ const validateOptions = (options?: ArithmeticProps): any => {
 //It contains matrix processes
 export default abstract class MatrixProcess {
 
+    /**
+    * It provides subtraction and summation for matrix args
+    * @param process 'sub' | 'sum'
+    */
     private static process(process: "sub" | "sum", matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix {
         let isFixed = false;
 
         isFixed = validateOptions(options);
 
-        const firstMatrixClone = matrixFirst.getMatrix();
-        const secondMatrixClone = matrixSecond.getMatrix();
+        const firstMatrixClone = matrixFirst.clone();
+        const secondMatrixClone = matrixSecond.clone();
 
         const matrix: number[][] = [];
         for (let i = 0; i < matrixFirst.getY(); i++) {
@@ -64,12 +82,12 @@ export default abstract class MatrixProcess {
             matrix.push(row)
         }
 
-        return new Matrix(matrix);
+        return new Matrix(matrix, matrixFirst.type as dataTypes);
     }
 
     public static constArithmeticProcess(matrix: Matrix, num: number, process: "mul" | "div" | "sub" | "sum", fixed?: number): Matrix {
         if (matrix && num) {
-            const matrixArray: number[][] = matrix.getMatrix();
+            const matrixArray: number[][] = matrix.clone();
             const resultMatrix: number[][] = [];
             const isFixed = (fixed === 0) || (fixed && validateFixed(fixed) ? true : false)
             for (let i = 0; i < matrix.getY(); i++) {
@@ -87,7 +105,7 @@ export default abstract class MatrixProcess {
                 }
                 resultMatrix.push(row);
             }
-            return new Matrix(resultMatrix);
+            return new Matrix(resultMatrix, matrix.type as dataTypes);
         } else {
             throw new Error("Illegal argument error!");
         }
@@ -95,6 +113,7 @@ export default abstract class MatrixProcess {
     }
 
     public static multiply(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix {
+        matricesTypeValidate(matrixFirst, matrixSecond)
         if (matrixFirst.getX() !== matrixSecond.getY())
             throw new Error("You cannot multiply these matrices!")
         else {
@@ -118,26 +137,28 @@ export default abstract class MatrixProcess {
                 }
                 matrix.push(firstRow)
             }
-            return new Matrix(matrix)
+            return new Matrix(matrix, matrixFirst.type as dataTypes)
         }
     }
 
     public static sum(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix {
-        if (matrixFirst.getX() === matrixSecond.getX() && matrixFirst.getY() === matrixSecond.getY()) {
-            const result = this.process("sum", matrixFirst, matrixSecond, options);
-            return result;
-        } else {
-            throw new Error("Matrices' column and row numbers must be the same of each other!")
-        }
+        matricesTypeValidate(matrixFirst, matrixSecond)
+
+        matricesSizeValidate(matrixFirst, matrixSecond)
+
+        const result = this.process("sum", matrixFirst, matrixSecond, options);
+        return result;
+
     }
 
     public static sub(matrixFirst: Matrix, matrixSecond: Matrix, options?: ArithmeticProps): Matrix {
-        if (matrixFirst.getX() === matrixSecond.getX() && matrixFirst.getY() === matrixSecond.getY()) {
-            const result = this.process("sub", matrixFirst, matrixSecond, options);
-            return result;
-        } else {
-            throw new Error("Matrices' column and row numbers must be the same of each other!")
-        }
+        matricesTypeValidate(matrixFirst, matrixSecond)
+
+        matricesSizeValidate(matrixFirst, matrixSecond)
+
+        const result = this.process("sub", matrixFirst, matrixSecond, options);
+        return result;
+
     }
 
     public static generateMatrix(options: GenerateMatrixProps): Matrix {
@@ -161,7 +182,7 @@ export default abstract class MatrixProcess {
                 }
                 matrix.push(row)
             }
-            return new Matrix(matrix)
+            return new Matrix(matrix, options.dataType ? options.dataType : "Float64")
         } else {
             throw new Error("Invalid props values error!")
         }
@@ -169,7 +190,7 @@ export default abstract class MatrixProcess {
 
     public static ifso(matrix: Matrix, queryFunc: (value: number) => boolean, doFunc: (value: number) => number, doFalseFunc?: (value: number) => number): Matrix {
         if (matrix && queryFunc !== null && doFunc !== null) {
-            const matrixArray = matrix.getMatrix();
+            const matrixArray = matrix.clone();
             const cloneMatrixArray = matrix.clone();
             const isDoFalseFuncActive = doFalseFunc && typeof doFalseFunc === 'function'
             try {
@@ -183,13 +204,13 @@ export default abstract class MatrixProcess {
                             }
                     }
                 }
-                return new Matrix(cloneMatrixArray)
+                return new Matrix(cloneMatrixArray, matrix.type as dataTypes)
             } catch (err) {
                 console.log(err)
                 throw new Error("Error!")
             }
         } else {
-            throw new Error("Null argumant error!")
+            throw new Error("Null argument error!")
         }
     }
 }
