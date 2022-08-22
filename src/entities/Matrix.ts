@@ -177,8 +177,6 @@ class Matrix extends MatrixProcess implements IMatrix {
     public get type(): string {
         return this.dataType;
     }
-    
-    
 
     public clone(): number[][] {
         return this.matrix.slice(0)

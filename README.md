@@ -66,6 +66,7 @@
         x: number,
         y: number,
         fixed?: number,
+        dataType?: dataTypes,
         scala: {
             max: number,
             min: number
