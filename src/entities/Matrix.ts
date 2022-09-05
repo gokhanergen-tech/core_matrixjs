@@ -43,7 +43,7 @@ class Matrix extends MatrixProcess implements IMatrix {
 
     public set(x: number, y: number, number: number): void {
         const convertNumber=this.convertNumberToDataType(number,this.dataType)
-        if(this.getX()>x&&this.getY()>y&&y<this.getY()&&x<this.getX()){
+        if(x>-1&&y>-1&&y<this.getY()&&x<this.getX()){
             this.matrix[x][y]=convertNumber;
             if(this.typedMatrix)
              this.typedMatrix[this.getX()*y+x]=convertNumber;
