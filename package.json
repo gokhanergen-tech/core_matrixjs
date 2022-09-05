@@ -1,6 +1,6 @@
 {
   "name": "matrixjs-core",
-  "version": "1.0.5-BETA",
+  "version": "1.0.5",
   "description": "This is a matrix library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
