@@ -16,6 +16,8 @@
     <li>public transpose(): Matrix </li>
     <li>public getX(): number</li>
     <li>public getY(): number</li>
+	<li>public set(x: number, y: number, number: number): void</li>
+	<li>public convertNumberToDataType(number: number, dataType: dataTypes): number</li>
     <li>public getTypedArray():MatrixType</li>
     <li>public get type(): string</li>
     <li>public clone(): number[][]</li>
@@ -74,6 +76,8 @@
     }</code>
     <li>public static ifso(matrix: Matrix, queryFunc: (value: number) => boolean, doFunc: (value: number) => number,
         doFalseFunc?: (value: number) => number): Matrix</li>
+	<li>public static eye(y:number,x:number):Matrix</li>
+	<li>public static fill(x:number,y:number,number:number):Matrix</li>
 </ul>
 <b>
     <h1>Installation</h1>
@@ -98,7 +102,7 @@ Matrix.constArithmeticProcess(matrix,3,"mul",2)
 
 
 <b>
-    <h1>Version 1.0.5</h1>
+    <h1>Version 1.0.5-BETA</h1>
 </b>
 <ul>
     <b>Deprecated</b>

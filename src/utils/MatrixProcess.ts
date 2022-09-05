@@ -188,6 +188,42 @@ export default abstract class MatrixProcess {
         }
     }
 
+    public static eye(y:number,x:number):Matrix{
+        const matrix:number[][]=[];
+        if(x<1&&y<1){
+            throw new Error("X and Y cannot be negative number and 1!")
+        }else{
+            for(let i=0;i<y;i++){
+                let row:number[]=[]
+                for(let j=0;j<x;j++){
+                    if(i===j){
+                        row.push(1)
+                    }else{
+                        row.push(0)
+                    }
+                }
+                matrix.push(row)
+            }
+            return new Matrix(matrix)
+        }
+    }
+
+    public static fill(x:number,y:number,number:number):Matrix{
+        const matrix:number[][]=[];
+        if(x<1&&y<1){
+            throw new Error("X and Y cannot be negative number and 1!")
+        }else{
+            for(let i=0;i<y;i++){
+                let row:number[]=[]
+                for(let j=0;j<x;j++){
+                    row.push(number)
+                }
+                matrix.push(row)
+            }
+        }
+        return new Matrix(matrix)
+    }
+
     public static ifso(matrix: Matrix, queryFunc: (value: number) => boolean, doFunc: (value: number) => number, doFalseFunc?: (value: number) => number): Matrix {
         if (matrix && queryFunc !== null && doFunc !== null) {
             const matrixArray = matrix.clone();

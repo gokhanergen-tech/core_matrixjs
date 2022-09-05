@@ -5,6 +5,17 @@ interface IMatrix {
     transpose(): Matrix,
 }
 
+const types = {
+    "Float64": Float64Array,
+    "Float32": Float32Array,
+    "UInt8": Uint8Array,
+    "Int8": Int8Array,
+    "UInt16": Uint16Array,
+    "Int16": Int16Array,
+    "UInt32": Uint32Array,
+    "Int32": Int32Array
+}
+
 
 
 class Matrix extends MatrixProcess implements IMatrix {
@@ -30,127 +41,50 @@ class Matrix extends MatrixProcess implements IMatrix {
             throw new Error("Matrix is not valid!")
     }
 
-     /**
-    * You can convert but lose the matrices' numbers
-    */
+    public set(x: number, y: number, number: number): void {
+        const convertNumber=this.convertNumberToDataType(number,this.dataType)
+        if(this.getX()>x&&this.getY()>y&&y<this.getY()&&x<this.getX()){
+            this.matrix[x][y]=convertNumber;
+            if(this.typedMatrix)
+             this.typedMatrix[this.getX()*y+x]=convertNumber;
+        }else{
+            throw new Error("Invalid array position!")
+        }
+    }
+
+    public convertNumberToDataType(number: number, dataType: dataTypes): number {
+        return new types[dataType]([number])[0]
+    }
+
+    /**
+   * You can convert but lose the matrices' numbers
+   */
     public convertDataType(dataType: dataTypes): number[][] | undefined {
         const array: number[] = [];
         let mapped: number[][] = [];
 
         if (this.matrix !== undefined) {
             this.dataType = dataType;
-            if (["Float64","Float32", "UInt8", "UInt16", "UInt32", "Int8", "Int16", "Int32"].indexOf(dataType) !== -1) {
+            if (["Float64", "Float32", "UInt8", "UInt16", "UInt32", "Int8", "Int16", "Int32"].indexOf(dataType) !== -1) {
                 this.matrix.forEach(arr => {
                     array.push(...arr)
                 })
-            }
-            switch (dataType) {
-                case "Int8":
-                    this.typedMatrix = new Int8Array(array)
 
-                    mapped= this.matrix.map(row => {
-                        const rowArray: Int8Array = new Int8Array(row)
-                        const convertedArray: number[] = []
-                        rowArray.forEach(data => {
-                            convertedArray.push(data)
-                        })
-                        return convertedArray;
-                    })
-                    this.matrix = mapped;
-                    return mapped;
+                this.typedMatrix = new Int8Array(array)
 
-                case "Int16":
-                    this.typedMatrix = new Int16Array(array)
-                    mapped= this.matrix.map(row => {
-                        const rowArray: Int16Array = new Int16Array(row)
-                        const convertedArray: number[] = []
-                        rowArray.forEach(data => {
-                            convertedArray.push(data)
-                        })
-                        return convertedArray;
+                mapped = this.matrix.map(row => {
+                    const rowArray: Int8Array = new types[dataType](row)
+                    const convertedArray: number[] = []
+                    rowArray.forEach(data => {
+                        convertedArray.push(data)
                     })
-                    this.matrix = mapped;
-                    return mapped;
-                case "Int32":
-                    this.typedMatrix = new Int32Array(array)
-                    mapped= this.matrix.map(row => {
-                        const rowArray: Int32Array = new Int32Array(row)
-                        const convertedArray: number[] = []
-                        rowArray.forEach(data => {
-                            convertedArray.push(data)
-                        })
-                        return convertedArray;
-                    })
-                    this.matrix = mapped;
-                    return mapped;
-                case "UInt8":
-                    this.typedMatrix = new Uint8Array(array)
-                    mapped = this.matrix.map(row => {
-                        const rowArray: Uint8Array = new Uint8Array(row)
-                        const convertedArray: number[] = []
-                        rowArray.forEach(data => {
-                            convertedArray.push(data)
-                        })
-                        return convertedArray;
-                    })
-                    this.matrix = mapped;
-                    return mapped;
-
-                case "UInt16":
-                    this.typedMatrix = new Uint16Array(array)
-                    mapped = this.matrix.map(row => {
-                        const rowArray: Uint16Array = new Uint16Array(row)
-                        const convertedArray: number[] = []
-                        rowArray.forEach(data => {
-                            convertedArray.push(data)
-                        })
-                        return convertedArray;
-                    })
-                    this.matrix = mapped;
-                    return mapped;
-
-                case "UInt32":
-                    this.typedMatrix = new Uint32Array(array)
-                    mapped = this.matrix.map(row => {
-                        const rowArray: Uint32Array = new Uint32Array(row)
-                        const convertedArray: number[] = []
-                        rowArray.forEach(data => {
-                            convertedArray.push(data)
-                        })
-                        return convertedArray;
-                    })
-                    this.matrix = mapped;
-                    return mapped;
-
-                case "Float32":
-                    this.typedMatrix = new Float32Array(array)
-                    mapped = this.matrix.map(row => {
-                        const rowArray: Float32Array = new Float32Array(row)
-                        const convertedArray: number[] = []
-                        rowArray.forEach(data => {
-                            convertedArray.push(data)
-                        })
-                        return convertedArray;
-                    });
-                    this.matrix = mapped;
-                    return mapped
-                case "Float64":
-                    this.typedMatrix = new Float64Array(array)
-                    mapped = this.matrix.map(row => {
-                        const rowArray: Float64Array = new Float64Array(row)
-                        const convertedArray: number[] = []
-                        rowArray.forEach(data => {
-                            convertedArray.push(data)
-                        })
-                        return convertedArray;
-                    });
-                    this.matrix = mapped;
-                    return mapped
-                default:
-                    this.typedMatrix = null
-                    break;
+                    return convertedArray;
+                })
+                this.matrix = mapped;
+                return mapped;
             }
         }
+
     }
 
     public transpose(): Matrix {
