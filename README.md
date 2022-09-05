@@ -128,3 +128,13 @@ Int8Array |
 Int16Array | Float32Array | Float64Array | null
     </code>
 </ul>
+<b>
+    <h1>Version 1.0.5</h1>
+</b>
+
+<ul>
+   <li>added public set(x: number, y: number, number: number): void</li>
+   <li>added public convertNumberToDataType(number: number, dataType: dataTypes): number</li>
+   <li>added public static eye(y:number,x:number):Matrix</li>
+   <li>added public static fill(x:number,y:number,number:number):Matrix</li>
+</ul>
