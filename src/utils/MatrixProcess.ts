@@ -1,5 +1,5 @@
 import Matrix from '../entities/Matrix'
-import { dataTypes, MatrixType } from '../types';
+import { dataTypes} from '../types';
 
 //Validate fixed
 const validateFixed = (fixed: number) => {
@@ -161,6 +161,11 @@ export default abstract class MatrixProcess {
 
     }
 
+    /**
+     * 
+     * @param options 
+     * @returns Matrix
+     */
     public static generateMatrix(options: GenerateMatrixProps): Matrix {
         if (isInteger(options.x) && isInteger(options.y)) {
             const matrix: number[][] = [];

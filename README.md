@@ -138,3 +138,11 @@ Int16Array | Float32Array | Float64Array | null
    <li>added public static eye(y:number,x:number):Matrix</li>
    <li>added public static fill(x:number,y:number,number:number):Matrix</li>
 </ul>
+<b>
+    <h1>Version 1.0.53</h1>
+</b>
+
+<ul>
+   <li>Fixed setting value problem</li>
+</ul>
+

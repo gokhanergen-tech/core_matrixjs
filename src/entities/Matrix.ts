@@ -43,8 +43,10 @@ class Matrix extends MatrixProcess implements IMatrix {
 
     public set(x: number, y: number, number: number): void {
         const convertNumber=this.convertNumberToDataType(number,this.dataType)
+        console.log(this.getY(),this.getX())
         if(x>-1&&y>-1&&y<this.getY()&&x<this.getX()){
-            this.matrix[x][y]=convertNumber;
+            
+            this.matrix[y][x]=convertNumber;
             if(this.typedMatrix)
              this.typedMatrix[this.getX()*y+x]=convertNumber;
         }else{
@@ -73,7 +75,7 @@ class Matrix extends MatrixProcess implements IMatrix {
                 this.typedMatrix = new Int8Array(array)
 
                 mapped = this.matrix.map(row => {
-                    const rowArray: Int8Array = new types[dataType](row)
+                    const rowArray = new types[dataType](row)
                     const convertedArray: number[] = []
                     rowArray.forEach(data => {
                         convertedArray.push(data)

@@ -1,6 +1,6 @@
 {
   "name": "matrixjs-core",
-  "version": "1.0.5-RELEASED",
+  "version": "1.0.53",
   "description": "This is a matrix library",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -19,7 +19,7 @@
   "author": "Gökhan ERGEN",
   "license": "MIT",
   "dependencies": {
-    "matrixjs-core": "^1.0.1",
+    "matrixjs-core": "^1.0.52-UPDATE",
     "typescript": "^4.7.4"
   },
   "files": [
