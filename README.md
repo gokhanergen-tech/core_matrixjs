@@ -145,4 +145,14 @@ Int16Array | Float32Array | Float64Array | null
 <ul>
    <li>Fixed setting value problem</li>
 </ul>
+<b>
+    <h1>Version 1.0.6</h1>
+</b>
+
+<ul>
+<li>Solved Maximum call stack size exceeded problem</li>
+<li>Solved shallow clone problem</li>
+<li>Added ravel function </li>
+<li>Added filter function</li>
+</ul>
 

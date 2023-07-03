@@ -5,6 +5,17 @@ interface IMatrix {
     transpose(): Matrix,
 }
 
+interface Filter{
+    rows?: {
+        start?: number,
+        end?: number
+    },
+    cols?: {
+        start?: number,
+        end?: number
+    }
+}
+
 const types = {
     "Float64": Float64Array,
     "Float32": Float32Array,
@@ -69,7 +80,7 @@ class Matrix extends MatrixProcess implements IMatrix {
             this.dataType = dataType;
             if (["Float64", "Float32", "UInt8", "UInt16", "UInt32", "Int8", "Int16", "Int32"].indexOf(dataType) !== -1) {
                 this.matrix.forEach(arr => {
-                    array.push(...arr)
+                    array.concat(arr)
                 })
 
                 this.typedMatrix = new Int8Array(array)
@@ -102,6 +113,11 @@ class Matrix extends MatrixProcess implements IMatrix {
         return new Matrix(cloneMatrixArray, this.dataType)
     }
 
+    public ravel():Matrix{
+        const clonedArray=this.clone();
+        return new Matrix([clonedArray.flat()],this.dataType);
+    }
+
     public getX(): number {
         return this.x;
     }
@@ -115,19 +131,16 @@ class Matrix extends MatrixProcess implements IMatrix {
     }
 
     public clone(): number[][] {
-        return this.matrix.slice(0)
+        return JSON.parse(JSON.stringify(this.matrix.slice(0)));
     }
 
-    public write(options?: {
-        rows?: {
-            start?: number,
-            end?: number
-        },
-        cols?: {
-            start?: number,
-            end?: number
-        }
-    }): void {
+    public write(options?:Filter ): void {
+        const matrixArray=this.filter(options).clone();
+        for (let i = 0; i < matrixArray.length; i++)
+            console.log(matrixArray[i].join(" "))
+    }
+
+    public filter(options?:Filter){
         let matrixArray = this.clone();
         if (options) {
             const { rows, cols } = options;
@@ -143,8 +156,7 @@ class Matrix extends MatrixProcess implements IMatrix {
             }
         }
 
-        for (let i = 0; i < matrixArray.length; i++)
-            console.log(matrixArray[i].join(" "))
+        return new Matrix(matrixArray,this.dataType);
     }
 
 
