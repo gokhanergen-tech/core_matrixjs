@@ -20,7 +20,6 @@
   "author": "Gökhan ERGEN",
   "license": "MIT",
   "dependencies": {
-    "jimp": "^0.22.8",
     "matrixjs-core": "^1.0.52-UPDATE",
     "typescript": "^4.7.4"
   },
