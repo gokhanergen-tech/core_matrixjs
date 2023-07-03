@@ -107,7 +107,6 @@ Matrix.constArithmeticProcess(matrix,3,"mul",2)
 <code>
 import { Matrix } from './index'
 import * as jimp from 'jimp'
-
 const rgbToGray=async ()=>{
     const myarray:number[][] = [];
   
@@ -130,11 +129,10 @@ const rgbToGray=async ()=>{
         })
       
     })
-  
-    
     return myarray;
 }
-
+</code>
+<code>
 const createImage=(path:string,x:number,y:number,array:number[][])=>{
     const test=new jimp(x,y);
     const bitmap=test.bitmap;
@@ -149,11 +147,10 @@ const createImage=(path:string,x:number,y:number,array:number[][])=>{
         bitmap.data[idx + 3] = 255
         i++;
        })
-
-    test.writeAsync(path);
-    
+    test.writeAsync(path);   
 }
 </code>
+
 <code>
   const init=async ()=>{
     const img=new Matrix(await rgbToGray() as number[][],"UInt8");
