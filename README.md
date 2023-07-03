@@ -153,8 +153,9 @@ const createImage=(path:string,x:number,y:number,array:number[][])=>{
     test.writeAsync(path);
     
 }
-
-const init=async ()=>{
+</code>
+<code>
+  const init=async ()=>{
     const img=new Matrix(await rgbToGray() as number[][],"UInt8");
     
     const croppedImage=img.filter({
@@ -176,6 +177,7 @@ const init=async ()=>{
 
 init();
 </code>
+
 
 
 <b>
