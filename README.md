@@ -99,6 +99,83 @@ let matrix=new Matrix([[1,1,1],[1,2,3]])
 Matrix.constArithmeticProcess(matrix,3,"mul",2)
 </code>
 <hr>
+<b>
+<h1>
+ Image Processing With jimp
+</h1>
+</b>
+<code>
+import { Matrix } from './index'
+import * as jimp from 'jimp'
+
+const rgbToGray=async ()=>{
+    const myarray:number[][] = [];
+  
+    await new Promise<any>(resolve=>{
+        jimp.read("test.jpg").then((image:any) => {
+            let k=0;
+            let row:number[]=[]
+            image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x:number, y:number, idx:number) {
+            
+                row.push(Math.round(image.bitmap.data[idx + 0]*0.3+image.bitmap.data[idx + 1]*0.59+image.bitmap.data[idx + 2]*0.11));
+                k++;
+                if(k===1280){
+                    myarray.push(row);
+                    k=0;
+                    row=[]
+                }
+                
+               })
+            resolve("ok");
+        })
+      
+    })
+  
+    
+    return myarray;
+}
+
+const createImage=(path:string,x:number,y:number,array:number[][])=>{
+    const test=new jimp(x,y);
+    const bitmap=test.bitmap;
+
+    const fleatted=array.flat();
+    let i=0;
+    test.scan(0, 0, x, y, function (_x:number,_y:number, idx:number) {
+       
+        bitmap.data[idx + 0] = fleatted[i]
+        bitmap.data[idx + 1] = fleatted[i]
+        bitmap.data[idx + 2] = fleatted[i]
+        bitmap.data[idx + 3] = 255
+        i++;
+       })
+
+    test.writeAsync(path);
+    
+}
+
+const init=async ()=>{
+    const img=new Matrix(await rgbToGray() as number[][],"UInt8");
+    
+    const croppedImage=img.filter({
+        rows:{
+          start:200,
+          end:500
+        },
+        cols:{
+          start:0,
+          end:500
+        }
+    })
+    
+    
+    
+    createImage("aa.jpg",croppedImage.getX(),croppedImage.getY(),croppedImage.clone());
+  
+}
+
+init();
+</code>
 
 
 <b>
